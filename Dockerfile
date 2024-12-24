@@ -4,6 +4,9 @@ FROM nginx:latest
 # Çalışma dizinini ayarla
 WORKDIR /usr/share/nginx/html
 
+# Curl yükle (healthcheck için gerekli)
+RUN apt-get update && apt-get install -y curl
+
 # Statik dosyaları kopyala
 COPY index.html .
 COPY styles.css .

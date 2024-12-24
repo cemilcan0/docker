@@ -10,7 +10,8 @@ pipeline {
             steps {
                 script {
                     // requests modülünü yükle
-                    sh 'pip install requests'
+                    sh 'apt-get update && apt-get install -y python3 python3-pip'  // Python ve pip yükle
+                    sh 'pip install requests'  // requests modülünü yükle
                     // Test scriptini çalıştır
                     sh 'python3 test_script.py'
                 }
