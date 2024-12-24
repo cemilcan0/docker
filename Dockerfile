@@ -1,7 +1,10 @@
 # Temel imaj
 FROM nginx:latest
 
-# Curl ve sudo yükle
+# root kullanıcısına geçiş
+USER root
+
+# Curl, sudo ve Python yükle
 RUN apt-get update && apt-get install -y curl sudo python3 python3-pip
 
 # Çalışma dizinini ayarla
