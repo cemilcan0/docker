@@ -3,7 +3,11 @@ FROM nginx:latest
 USER root
 
 # Apt-get kilit sorununu temizle ve apt-get'i güncelle
-RUN rm -rf /var/lib/apt/lists/* \
+RUN rm -f /var/lib/apt/lists/lock \
+    && rm -f /var/cache/apt/archives/lock \
+    && rm -f /var/lib/dpkg/lock* \
+    && rm -f /var/lib/dpkg/lock \
+    && dpkg --configure -a \
     && apt-get clean \
     && apt-get update --allow-unauthenticated \
     && apt-get install -y curl sudo python3 python3-pip \
