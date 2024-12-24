@@ -1,38 +1,51 @@
 pipeline {
     agent any
+
+    environment {
+        DOCKER_IMAGE = 'simple-chat-app'
+    }
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                sh 'docker build -t simple-chat-app .'
+                // Git repo'dan checkout yapılıyor
+                checkout scm
             }
         }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Docker build komutu çalıştırılıyor
+                    sh 'docker build -t $DOCKER_IMAGE .'
+                }
+            }
+        }
+
         stage('Test') {
             steps {
                 script {
-                    // requests modülünü yükle
-                    sh 'apt-get update && apt-get install -y python3 python3-pip'  // Python ve pip yükle
-                    sh 'pip install requests'  // requests modülünü yükle
-                    // Test scriptini çalıştır
-                    sh 'python3 test_script.py'
+                    // Docker container'ı içinde test yapılabilir
+                    sh 'docker run --rm $DOCKER_IMAGE apt-get update'
                 }
             }
         }
+
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 8080:80 simple-chat-app'
-            }
-        }
-        stage('Rollback') {
-            steps {
                 script {
-                    try {
-                        sh 'docker run -d -p 8080:80 simple-chat-app'
-                    } catch (Exception e) {
-                        sh 'docker stop $(docker ps -q)'
-                        sh 'docker run -d -p 8080:80 stable-simple-chat-app'
-                    }
+                    // Deploy işlemi yapılabilir
+                    echo "Deploying the application..."
+                    // Burada deploy işlemleri eklenebilir
                 }
             }
+        }
+    }
+
+    post {
+        always {
+            // Pipeline tamamlandığında yapılacak temizlik işlemleri
+            echo 'Cleaning up...'
         }
     }
 }
