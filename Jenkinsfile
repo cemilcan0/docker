@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'simple-chat-app'
+        DOCKER_IMAGE = 'color-app'
     }
 
     stages {
