@@ -1,11 +1,11 @@
 # Temel imaj
 FROM nginx:latest
 
+# Curl ve sudo yükle
+RUN apt-get update && apt-get install -y curl sudo python3 python3-pip
+
 # Çalışma dizinini ayarla
 WORKDIR /usr/share/nginx/html
-
-# Curl yükle (healthcheck için gerekli)
-RUN apt-get update && apt-get install -y curl
 
 # Statik dosyaları kopyala
 COPY index.html .
