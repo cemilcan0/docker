@@ -1,9 +1,9 @@
 import requests
 
-# Test 1: Anasayfa yanıt veriyor mu?
+# Test 1: Is the homepage responsive?
 response = requests.get("http://localhost:8080")
-assert response.status_code == 200, "Anasayfa yanıt vermiyor!"
+assert response.status_code == 200, "Homepage is not responding!"
 
-# Test 2: Sayfa içeriği kontrolü
-assert "Welcome to Chat App" in response.text, "Sayfa içeriği hatalı!"
-print("Tüm testler başarıyla geçti.")
+# Test 2: Check page content
+assert "Welcome to Color App" in response.text, "Page content is incorrect!"
+print("All tests are successful")
